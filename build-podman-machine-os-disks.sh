@@ -63,10 +63,7 @@ main() {
         exit 1
     fi
 
-
-    #gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/main/"
-    gitrepotld="https://raw.githubusercontent.com/dustymabe/coreos-assembler/dusty-osbuild/"
-
+    gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/main/"
     curl -LO --fail "${gitrepotld}/src/runvm-osbuild"
     chmod +x runvm-osbuild
     for manifest in "coreos.osbuild.${ARCH}.mpp.yaml" "platform.applehv.ipp.yaml" "platform.hyperv.ipp.yaml" "platform.qemu.ipp.yaml"; do

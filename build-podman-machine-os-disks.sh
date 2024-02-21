@@ -63,7 +63,9 @@ main() {
         exit 1
     fi
 
-    gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/main/"
+    # Freeze on specific version for now to increase stability for the podman folks.
+    #gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/main/"
+    gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/74395f97327e0927a82707ca6f59f93b169c4286/"
     curl -LO --fail "${gitrepotld}/src/runvm-osbuild"
     chmod +x runvm-osbuild
     for manifest in "coreos.osbuild.${ARCH}.mpp.yaml" platform.{applehv,hyperv,qemu,gcp}.ipp.yaml; do

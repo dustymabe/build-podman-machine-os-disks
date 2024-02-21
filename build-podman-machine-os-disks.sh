@@ -66,7 +66,7 @@ main() {
     gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/main/"
     curl -LO --fail "${gitrepotld}/src/runvm-osbuild"
     chmod +x runvm-osbuild
-    for manifest in "coreos.osbuild.${ARCH}.mpp.yaml" "platform.applehv.ipp.yaml" "platform.hyperv.ipp.yaml" "platform.qemu.ipp.yaml"; do
+    for manifest in "coreos.osbuild.${ARCH}.mpp.yaml" platform.{applehv,hyperv,qemu,gcp}.ipp.yaml; do
         curl -LO --fail "${gitrepotld}/src/osbuild-manifests/${manifest}"
     done
 

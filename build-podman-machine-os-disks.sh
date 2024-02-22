@@ -65,9 +65,10 @@ main() {
     # Convert it to an absolute path
     OCIARCHIVE=$(readlink -f $OCIARCHIVE)
 
-    # Freeze on specific version for now to increase stability for the podman folks.
-    #gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/main/"
-    gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/74395f97327e0927a82707ca6f59f93b169c4286/"
+    # Freeze on specific version for now to increase stability.
+    #gitreporef="main"
+    gitreporef="74395f97327e0927a82707ca6f59f93b169c4286"
+    gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/${gitreporef}/"
     curl -LO --fail "${gitrepotld}/src/runvm-osbuild"
     chmod +x runvm-osbuild
     for manifest in "coreos.osbuild.${ARCH}.mpp.yaml" platform.{applehv,hyperv,qemu,gcp}.ipp.yaml; do

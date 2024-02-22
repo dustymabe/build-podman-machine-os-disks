@@ -65,15 +65,20 @@ main() {
     # Convert it to an absolute path
     OCIARCHIVE=$(readlink -f $OCIARCHIVE)
 
+    # Make a local tmpdir
+    mkdir -p tmp; rm -f tmp/*
+
     # Freeze on specific version for now to increase stability.
     #gitreporef="main"
     gitreporef="74395f97327e0927a82707ca6f59f93b169c4286"
     gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/${gitreporef}/"
+    pushd ./tmp
     curl -LO --fail "${gitrepotld}/src/runvm-osbuild"
     chmod +x runvm-osbuild
     for manifest in "coreos.osbuild.${ARCH}.mpp.yaml" platform.{applehv,hyperv,qemu,gcp}.ipp.yaml; do
         curl -LO --fail "${gitrepotld}/src/osbuild-manifests/${manifest}"
     done
+    popd
 
     if [ "${PLATFORM:-}" == "" ]; then
         platforms=(applehv hyperv qemu)
@@ -101,7 +106,7 @@ main() {
         esac
         outfile="./$(basename $OCIARCHIVE).${ARCH}.${platform}.${suffix}"
 
-        cat > diskvars.json << EOF
+        cat > tmp/diskvars.json << EOF
 {
 	"osname": "fedora-coreos",
 	"deploy-via-container": "true",
@@ -112,12 +117,14 @@ main() {
 	"cloud-image-size": "10240"
 }
 EOF
-        ./runvm-osbuild                \
-            --config diskvars.json     \
+        ./tmp/runvm-osbuild            \
+            --config tmp/diskvars.json \
             --filepath "./${outfile}"  \
-            --mpp "./coreos.osbuild.${ARCH}.mpp.yaml"
+            --mpp "tmp/coreos.osbuild.${ARCH}.mpp.yaml"
+        echo "Created $platform image file at: ${outfile}"
     done
 
+    rm -f tmp/*; rmdir tmp # Cleanup
 }
 
 main "$@"

@@ -3,7 +3,7 @@ set -x -euo pipefail
 
 # Run this script on a fully up to date Fedora 39 VM with SELinux
 # in permissive mode and the following tools installed:
-# sudo dnf install --enablerepo=updates-testing -y osbuild osbuild-tools osbuild-ostree jq
+# sudo dnf install --enablerepo=updates-testing -y osbuild osbuild-tools osbuild-ostree jq xfsprogs e2fsprogs
 #
 # Invocation of the script would look something like this:
 #
@@ -37,7 +37,7 @@ check_rpm() {
 }
 
 check_rpms() {
-    reqs=(osbuild osbuild-tools osbuild-ostree jq)
+    reqs=(osbuild osbuild-tools osbuild-ostree jq xfsprogs e2fsprogs)
     for req in "${reqs[@]}"; do
         check_rpm "$req"
     done

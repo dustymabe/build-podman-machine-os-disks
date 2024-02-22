@@ -62,6 +62,8 @@ main() {
         echo "need to pass in full path to .ociarchive file"
         exit 1
     fi
+    # Convert it to an absolute path
+    OCIARCHIVE=$(readlink -f $OCIARCHIVE)
 
     # Freeze on specific version for now to increase stability for the podman folks.
     #gitrepotld="https://raw.githubusercontent.com/coreos/coreos-assembler/main/"

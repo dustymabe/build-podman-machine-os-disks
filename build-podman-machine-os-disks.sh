@@ -113,7 +113,7 @@ main() {
 	"ostree-container": "${OCIARCHIVE}",
 	"image-type": "${platform}",
 	"container-imgref": "ostree-remote-registry:fedora:quay.io/containers/podman-machine-os:5.0",
-	"metal-image-size": "3072",
+	"metal-image-size": "4192",
 	"cloud-image-size": "10240"
 }
 EOF
